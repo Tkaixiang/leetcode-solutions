@@ -1,3 +1,4 @@
+# https://leetcode.com/problems/climbing-stairs/
 import math
 
 class Solution:
@@ -34,7 +35,7 @@ class Solution:
         for x in range(1, numberOfTwos+1, 1):
             numberOfOnes = n - (x*2) 
             sampleSize = numberOfOnes + x
-            ways += int(math.factorial(sampleSize) / (math.factorial(x) * math.factorial(sampleSize - x)))
+            ways += int(math.factorial(sampleSize) / (math.factorial(x) * math.factorial(sampleSize - x))) # nCr formula
         
         return ways
             

@@ -1,3 +1,4 @@
+# https://leetcode.com/problems/best-time-to-buy-and-sell-stock/
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
         # 1. Iterate throuh prices, and update the minimum price as you go

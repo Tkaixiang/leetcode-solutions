@@ -1,3 +1,4 @@
+# https://leetcode.com/problems/range-sum-query-immutable/
 class NumArray:
 
     def __init__(self, nums: List[int]):
