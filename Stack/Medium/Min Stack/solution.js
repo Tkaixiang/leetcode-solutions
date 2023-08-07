@@ -17,13 +17,13 @@ class MinStack {
     top() {
         return this.arrayStack[this.arrayStack.length - 1]
     }
-    getMin() {
+    getMin() { // Return the minimum value in the stack
         return this.minStack[this.minStack.length - 1]
         /* 
         minStack works as the mainstructure is a STACK
         - Not every element needs to be included as
         - Every element bigger than the Current Minimum will be removed before it reaches the next minimum
-        - E.g -1 -5 -3 (Although -3 is the 2nd minimum it has to be removed if we want to remove -5 as the minimum)
+        - E.g -1 -5 -3 (Although -3 is the 2nd minimum it has to be removed if we want to remove -5 as the minimum and get a new minimum)
         */ 
     }
 }
