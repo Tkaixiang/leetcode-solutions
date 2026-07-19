@@ -66,7 +66,8 @@ class Solution:
                     else:
                         used_shortcut = False
 
-                    # We need to +1 even if since we HAVE YET TO INCREMENT FROM OUR CURRENT DICE POSITION
+                    # We need to +1 even if we land on a shortcut
+                    # since we HAVE YET TO INCREMENT FROM OUR CURRENT DICE POSITION
                     # So all these connections are +1
                     queue_to_visit.append((landing, dice_rolls + 1))
 
