@@ -1,43 +1,53 @@
-# https://leetcode.com/problems/3sum/description/
+# https://leetcode.com/problems/3sum/
 class Solution:
-    def twoSumAllPairs(self, nums, start_index, target):
-        valid_pairs = []
-        left = start_index
-        right = len(nums) - 1
-        while left < right:
-            total_sum = nums[left] + nums[right]
-            if total_sum == target:
-                valid_pairs.append([nums[left], nums[right]])
-                # Restrict both ways from here since we do not want the same result again
-                left += 1
-                right -= 1
-            elif total_sum < target:
-                # Too small, we need bigger number!
-                left += 1
-            else:
-                right -= 1
+    def threeSum(self, nums: list[int]) -> list[list[int]]:
+        # 1. Not using the same element
+        # 2. Triplets add to 0
 
-        return valid_pairs
+        # For each x:
+        #   twoSum() and find me -x
+        #   x + (-x) = 0
 
-    def threeSum(self, nums: List[int]) -> List[List[int]]:
         nums.sort()
-        left = 0
-        right = len(nums) - 1
 
         triplets = []
-        triplet_hashes = {}
-        nums.sort()
-
-        # Idea: If we are to FIX one number, it essentially becomes a two-sum problem!
+        triplets_set = set()
+        starting_val_set = {}
         for x in range(0, len(nums), 1):
-            fixed_number = nums[x]
-            target_to_find = -fixed_number
-            two_index_pairs = self.twoSumAllPairs(nums, x + 1, target_to_find)
+            if nums[x] in starting_val_set: # Skip duplicate values of nums[x]
+                continue
+            
+            starting_val_set[nums[x]] = 1
 
-            for pair in two_index_pairs:
-                triplet_hash = f"{fixed_number}_{pair[0]}_{pair[1]}"
-                if triplet_hash not in triplet_hashes:
-                    triplet_hashes[triplet_hash] = 1
-                    triplets.append([fixed_number, pair[0], pair[1]])
+            # Find such that x (current num) + (-x)(pair) === 0
+            result = self.twoSum(-nums[x], nums, x+1)
+            if len(result) == 0:
+                continue
+            
+            for pair in result:
+                triplet = [nums[x], pair[0], pair[1]]
+                # Check for duplicate triplets
+                # [-1,1,0] === [0,1,-1] in this case
+                triplet_str = f"{nums[x]}_{pair[0]}_{pair[1]}"
+                if triplet_str in triplets_set:
+                    continue
 
+                triplets_set.add(triplet_str)
+                triplets.append(triplet)
+        
         return triplets
+            
+
+    # skip = current used element, can't use again
+    # Returns -> ALL pairs that fit target
+    def twoSum(self, target, nums, start):
+        hash_table = {}
+        pairs = []
+
+        for x in range(start, len(nums)):
+            sum_needed = target - nums[x]
+            if sum_needed in hash_table:
+                pairs.append([nums[x], sum_needed])
+            
+            hash_table[nums[x]] = 1
+        return pairs
